@@ -21,21 +21,13 @@ IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png"]
 
 def make_parser():
     parser = argparse.ArgumentParser("YOLOX Demo!")
-    parser.add_argument(
-        "demo", default="image", help="demo type, eg. image, video and webcam"
-    )
+    parser.add_argument("demo", default="image", help="demo type, eg. image, video and webcam")
     parser.add_argument("-expn", "--experiment-name", type=str, default=None)
     parser.add_argument("-n", "--name", type=str, default=None, help="model name")
 
-    parser.add_argument(
-        "--path", default="./assets/dog.jpg", help="path to images or video"
-    )
+    parser.add_argument("--path", default="./assets/dog.jpg", help="path to images or video")
     parser.add_argument("--camid", type=int, default=0, help="webcam demo camera id")
-    parser.add_argument(
-        "--save_result",
-        action="store_true",
-        help="whether to save the inference result of image/video",
-    )
+    parser.add_argument("--save_result",action="store_true",help="whether to save the inference result of image/video",)
 
     # exp file
     parser.add_argument(
@@ -163,6 +155,8 @@ class Predictor(object):
                 self.nmsthre, class_agnostic=True
             )
             logger.info("Infer time: {:.4f}s".format(time.time() - t0))
+            
+        print(outputs)
         return outputs, img_info
 
     def visual(self, output, img_info, cls_conf=0.35):
@@ -311,6 +305,7 @@ def main(exp, args):
 
 if __name__ == "__main__":
     args = make_parser().parse_args()
+    print(args)
     exp = get_exp(args.exp_file, args.name)
 
     main(exp, args)
